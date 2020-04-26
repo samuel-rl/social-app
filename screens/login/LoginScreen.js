@@ -9,6 +9,7 @@ import {
     StatusBar,
     LayoutAnimation,
 } from "react-native";
+import * as firebase from "firebase";
 
 export default class LoginScreen extends React.Component {
 
@@ -16,6 +17,15 @@ export default class LoginScreen extends React.Component {
         email: "",
         password: "",
         errorMessage: null,
+    };
+
+    handleLogin = () => {
+        const { email, password } = this.state;
+
+        firebase
+            .auth()
+            .signInWithEmailAndPassword(email, password)
+            .catch((error) => this.setState({ errorMessage: error.message }));
     };
 
     render(){
@@ -58,7 +68,8 @@ export default class LoginScreen extends React.Component {
                 </View>
 
                 <TouchableOpacity
-                    style={styles.button}>
+                    style={styles.button}
+                    onPress={this.handleLogin}>
                     <Text style={styles.textButton}>
                         Connexion
                     </Text>

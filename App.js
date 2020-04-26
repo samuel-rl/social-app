@@ -9,7 +9,8 @@ import SplashScreen from "./screens/SplashScreen";
 import LoginScreen from "./screens/login/LoginScreen";
 import RegisterScreen from "./screens/login/RegisterScreen";
 
-import { StyleSheet, Text, View } from 'react-native';
+import MainScreen from './screens/app/MainScreen';
+
 
 
 export default createAppContainer(
@@ -17,19 +18,11 @@ export default createAppContainer(
       {
           Splash: SplashScreen ,
           Login : LoginScreen,
-          Register: RegisterScreen
+          Register: RegisterScreen,
+          Main : MainScreen
       },
       {
           initialRouteName: "Splash",
       }
   )
 );
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

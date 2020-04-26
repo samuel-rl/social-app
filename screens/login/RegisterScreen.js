@@ -9,14 +9,34 @@ import {
     StatusBar,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import * as firebase from "firebase";
 
 export default class RegisterScreen extends React.Component {
+    static navigationoptions = {
+        header: null,
+    };
+
     state = {
         name: "",
         firstname: "",
         email: "",
         password: "",
         errorMessage: null,
+    };
+
+    handleSignUp = () => {
+        firebase
+            .auth()
+            .createUserWithEmailAndPassword(
+                this.state.email,
+                this.state.password
+            )
+            .then((userCredentials) => {
+                return userCredentials.user.updateProfile({
+                    displayName: this.state.name,
+                });
+            })
+            .catch((error) => this.setState({ errorMessage: error.message }));
     };
 
     render() {
