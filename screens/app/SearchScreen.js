@@ -26,7 +26,7 @@ export default class SearchScreen extends React.Component {
     state = {
         value: "",
         data: myList,
-        loading: false,
+        loading: true,
     };
 
 

@@ -9,7 +9,8 @@ import {
     SafeAreaView,
     FlatList,
     Image,
-    Button
+    Button,
+    ActivityIndicator
 } from "react-native";
 import moment from "moment";
 import "moment/min/locales";
@@ -18,62 +19,65 @@ import { Ionicons } from "@expo/vector-icons";
 import Fire from "../../config/Fire";
 import * as firebase from "firebase";
 
-
-const myList = [
-];
+const myList = [];
 
 export default class WallScreen extends React.Component {
     state = {
         data: myList,
-        curTime : null
+        loading: true
     };
 
     componentDidMount() {
         this.load();
-        var that = this
-
-        firebase.database().ref('/posts').on('child_added', function(dat){
-            
-            /*var newData = [...that.state.data]
-            newData.push(dat)
-            that.setState({data: newData})*/
-            console.log("nouveau message")
-        })
     }
-
-
 
     load = () => {
-        Fire.shared.getPost().then((res) => {
+        Fire.shared.getPost().then(res => {
             var newres = res.sort((a, b) => {
-                return a.timestamp - b.timestamp
-            })
+                return a.timestamp - b.timestamp;
+            });
             this.setState({
                 data: newres.reverse(),
+                loading: false
             });
-        })
+        });
+    };
+
+    onRefresh() {
+        this.setState({ loading: false }, function() {
+            this.load();
+        });
     }
 
-
-    renderPost = (post) => {
-        
+    renderPost = post => {
         return (
             <View style={styles.feedItem}>
-                <Image source={post.avatar ? {uri: post.avatar} : require("../../assets/avatar.png")} style={styles.avatar}></Image>
+                <Image
+                    source={
+                        post.avatar
+                            ? { uri: post.avatar }
+                            : require("../../assets/avatar.png")
+                    }
+                    style={styles.avatar}
+                />
                 <View style={{ flex: 1 }}>
                     <View
                         style={{
                             flexDirection: "row",
                             justifyContent: "space-between",
-                            alignItems: "center",
+                            alignItems: "center"
                         }}
                     >
                         <View>
-                            <Text style={styles.name}>{post.firstname + " " + post.name}</Text>
+                            <Text style={styles.name}>
+                                {post.firstname + " " + post.name}
+                            </Text>
                         </View>
                     </View>
 
-                    <Text style={styles.post}>{post.message}</Text>
+                    <Text style={styles.post}>
+                        {post.message}
+                    </Text>
                     <Text style={styles.timestamp}>
                         {moment(post.timestamp).locale("fr").fromNow()}
                     </Text>
@@ -82,16 +86,28 @@ export default class WallScreen extends React.Component {
         );
     };
 
-    render() {
-        return (
-            <SafeAreaView style={styles.container}>
+    renderList = () => {
+        if (this.state.loading === false) {
+            return (
                 <FlatList
                     style={styles.feed}
                     data={this.state.data}
                     renderItem={({ item }) => this.renderPost(item)}
-                    keyExtractor={(item) => item.id}
+                    keyExtractor={(item, index) => `${index}`}
                     showsVerticalScrollIndicator={false}
+                    onRefresh={() => this.onRefresh()}
+                    refreshing={this.state.loading}
                 />
+            );
+        } else {
+            return <ActivityIndicator size="large" color="#000" />;
+        }
+    };
+
+    render() {
+        return (
+            <SafeAreaView style={styles.container}>
+                {this.renderList()}
             </SafeAreaView>
         );
     }
@@ -100,13 +116,13 @@ export default class WallScreen extends React.Component {
 const styles = StyleSheet.create({
     container: {
         marginTop: 40,
-        flex: 1,
+        flex: 1
     },
     avatar: {
         width: 36,
         height: 36,
         borderRadius: 18,
-        marginRight: 16,
+        marginRight: 16
     },
     feedItem: {
         backgroundColor: "#838899",
@@ -114,23 +130,23 @@ const styles = StyleSheet.create({
         padding: 8,
         flexDirection: "row",
         marginVertical: 8,
-        marginHorizontal: 7,
+        marginHorizontal: 7
     },
     name: {
         fontSize: 17,
-        color: "#000",
+        color: "#000"
     },
     timestamp: {
         fontSize: 11,
         color: "#c4c6ce",
-        marginTop: 4,
+        marginTop: 4
     },
     post: {
         marginTop: 16,
         fontSize: 14,
-        color: "#FFF",
+        color: "#FFF"
     },
     buttonChange: {
-        backgroundColor: "#fcbf1e",
-    },
+        backgroundColor: "#fcbf1e"
+    }
 });

@@ -19,8 +19,6 @@ import PostScreen from "./screens/app/PostScreen";
 import * as Permissions from "expo-permissions";
 import { Notifications } from "expo";
 
-import { YellowBox } from "react-native";
-import _ from "lodash";
 
 const AppContainer = createStackNavigator(
     {
