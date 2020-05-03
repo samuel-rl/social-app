@@ -7,7 +7,7 @@ import Fire from "../config/Fire";
 export default class LoadingScreen extends React.Component{
     componentDidMount(){
         firebase.auth().onAuthStateChanged(user => {
-            this.props.navigation.navigate(user ? "Main" : "Login")
+            this.props.navigation.navigate(user ? "App" : "Login")
         });
     }
 

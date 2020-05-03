@@ -10,6 +10,7 @@ import {
     LayoutAnimation,
 } from "react-native";
 import * as firebase from "firebase";
+import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth"
 
 export default class LoginScreen extends React.Component {
 
