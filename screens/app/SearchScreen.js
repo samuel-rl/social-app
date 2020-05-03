@@ -10,12 +10,12 @@ import {
     FlatList,
     Platform,
     SafeAreaView,
-    StatusBar
+    StatusBar,
+    ActivityIndicator
 } from "react-native";
 
 import ProfileListItem from "../../components/ProfileListItem";
 
-require("firebase/firestore");
 import Fire from "../../config/Fire";
 
 
@@ -29,34 +29,40 @@ export default class SearchScreen extends React.Component {
         loading: false,
     };
 
-    renderSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: 1,
-                    width: "86%",
-                    backgroundColor: "#452263",
-                    marginLeft: "14%",
-                }}
-            />
-        );
-    };
 
     search = async (text) => {
-    
-       
         this.setState({
             value: text,
+            loading: true
         });
 
         Fire.shared.searchUserByName(text).then((res) => {
             this.setState({
                 data: res,
+                loading: false
             });
-        });
-
+        }).catch(() => {
+            console.log("Promise Rejected");
+        })
     }
 
+    renderList = () => {
+        if(this.state.loading === false){
+            return (
+                <FlatList
+                    keyExtractor={(item, index) => `${index}`}
+                    data={this.state.data}
+                    renderItem={({ item }) => (
+                        <ProfileListItem uid={item.uid} name={item.name} firstname={item.firstname} avatar={item.avatar}></ProfileListItem>
+                    )}
+                ></FlatList>
+            )
+        }else{
+            return(
+                <ActivityIndicator size="large" color="#000" />
+            )
+        }
+    }
 
 
     render() {
@@ -72,14 +78,7 @@ export default class SearchScreen extends React.Component {
                         onChangeText={(text) => this.search(text)}
                     ></TextInput>
                 </View>
-                <FlatList
-                    keyExtractor={(item, index) => `${index}`}
-                    extraData={this.state}
-                    data={this.state.data}
-                    renderItem={({ item }) => (
-                        <ProfileListItem uid={item.uid} name={item.name} firstname={item.firstname} avatar={item.avatar}></ProfileListItem>
-                    )}
-                ></FlatList>
+                {this.renderList()}
             </SafeAreaView>
         );
     }
@@ -100,7 +99,6 @@ const styles = StyleSheet.create({
         height: 40,
         borderRadius: 3,
         borderColor: "gray",
-        textAlign: "center",
     },
     containerInput: {
         width: "100%",

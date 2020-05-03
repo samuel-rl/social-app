@@ -2,8 +2,6 @@ import * as firebase from "firebase";
 import { AsyncStorage } from "react-native";
 require("firebase/firestore");
 
-const admin = require('firebase-admin')
-
 var firebaseConfig = {
     apiKey: "AIzaSyC8lDAIu6rfM22k0FXmftKG_gclmuKoRuU",
     authDomain: "social-app-7c36e.firebaseapp.com",
@@ -133,7 +131,9 @@ class Fire {
                         return itemData.includes(textData);
                     });
                     resolve(newData);
-                });
+                }).catch(error => {
+                    reject(error);
+                })
         });
     };
 
@@ -142,7 +142,12 @@ class Fire {
             let db = this.firestore.collection("friends").doc(this.uid);
         
             db.get().then((snapshot) => {
+
                 res = snapshot.data();
+                if(res == undefined || res == null){
+                    console.log("utilisateur n'as pas d'amis")
+                    resolve(null);
+                }else{
                     if(uid in res){
                         if(res[uid] == true){
                             console.log("true uid = " + uid)
@@ -159,6 +164,7 @@ class Fire {
                         console.log(res)
                         resolve(null);
                     }
+                }
                 
             })
         })
