@@ -26,24 +26,32 @@ export default class SearchScreen extends React.Component {
     state = {
         value: "",
         data: myList,
-        loading: true,
+        loading: null,
     };
 
 
     search = async (text) => {
-        this.setState({
-            value: text,
-            loading: true
-        });
-
-        Fire.shared.searchUserByName(text).then((res) => {
+        if(text != ""){
             this.setState({
-                data: res,
-                loading: false
+                value: text,
+                loading: true
             });
-        }).catch(() => {
-            console.log("Promise Rejected");
-        })
+    
+            Fire.shared.searchUserByName(text).then((res) => {
+                this.setState({
+                    data: res,
+                    loading: false
+                });
+            }).catch(() => {
+                console.log("Promise Rejected");
+            })
+        }else{
+            this.setState({
+                value: text,
+                loading: null
+            });
+        }
+
     }
 
     renderList = () => {
@@ -57,7 +65,12 @@ export default class SearchScreen extends React.Component {
                     )}
                 ></FlatList>
             )
-        }else{
+        }else if(this.state.loading === null){
+            return(
+                <View style={{backgroundColor:"#7289da", width: "100%", height: "100%"}}></View>
+            )
+        }else
+            {
             return(
                 <ActivityIndicator size="large" color="#000" />
             )
