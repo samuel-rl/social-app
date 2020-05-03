@@ -1,0 +1,17 @@
+[debug] [2020-05-02T18:25:57.320Z] ----------------------------------------------------------------------
+[debug] [2020-05-02T18:25:57.328Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\samue\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-05-02T18:25:57.330Z] CLI Version:   8.2.0
+[debug] [2020-05-02T18:25:57.330Z] Platform:      win32
+[debug] [2020-05-02T18:25:57.330Z] Node Version:  v10.16.0
+[debug] [2020-05-02T18:25:57.335Z] Time:          Sat May 02 2020 20:25:57 GMT+0200 (GMT+02:00)
+[debug] [2020-05-02T18:25:57.335Z] ----------------------------------------------------------------------
+[debug] [2020-05-02T18:25:57.336Z] 
+[debug] [2020-05-02T18:25:57.371Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-05-02T18:25:57.373Z] > authorizing via signed-in user
+[debug] [2020-05-02T18:25:57.374Z] [iam] checking project social-app-7c36e for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2020-05-02T18:25:57.386Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/social-app-7c36e:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2020-05-02T18:25:58.326Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 02 May 2020 18:25:57 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=693","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-05-02T18:25:58.331Z] >>> HTTP REQUEST POST https://iam.googleapis.com/v1/projects/social-app-7c36e/serviceAccounts/social-app-7c36e@appspot.gserviceaccount.com:testIamPermissions  
+ {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2020-05-02T18:25:59.620Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 02 May 2020 18:25:58 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,quic=\":443\"; ma=2592000; v=\"46,43\"","accept-ranges":"none","transfer-encoding":"chunked"}
